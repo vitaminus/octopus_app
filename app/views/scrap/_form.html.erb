@@ -1,0 +1,19 @@
+<%= form_tag('/', method: 'post', :remote => true, class: 'form-horizontal') do %>
+  <div class="row">
+    <div class='col s1 offset-s3'>
+      <%= label_tag :from, nil, class: 'control-label' %>
+      <%= text_field_tag :from, nil, class: "input-field" %>
+    </div>
+    <div class='col s1'>
+      <%= label_tag :to, nil, class: 'control-label' %>
+      <%= text_field_tag :to, nil, class: "input-field" %>
+    </div>
+    <div class='col s2'>
+      <%= label_tag :date, nil, class: "control-label" %>
+      <%= date_field_tag :date, nil, class: "datepicker" %>
+    </div>
+    <div class="col">
+      <%= submit_tag "Get Data", class: "waves-effect waves-light btn-large" %>
+    </div>
+  </div>
+<% end %>
