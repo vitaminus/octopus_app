@@ -79,6 +79,7 @@ GEM
     nokogiri (1.6.8)
       mini_portile2 (~> 2.1.0)
       pkg-config (~> 1.1.7)
+    pg (0.18.2)
     pkg-config (1.1.7)
     poltergeist (1.9.0)
       capybara (~> 2.1)
@@ -151,6 +152,7 @@ DEPENDENCIES
   jbuilder (~> 2.0)
   jquery-rails
   octopus!
+  pg
   poltergeist (~> 1.9.0)
   rails (= 4.1.14.2)
   sass-rails (~> 4.0.3)
