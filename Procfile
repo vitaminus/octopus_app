@@ -1,1 +1,1 @@
-web: bundle exec rails server thin -p $PORT timeout=300 wait=300
+web: bundle exec rails server thin -p $PORT --timeout 300
