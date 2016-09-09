@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/vitaminus/octopus.git
-  revision: 51194a9d54c565b1ba5fe51091efa7a9f6fa7b9b
+  revision: 6822f5bc20ac81f1c62b0cbbf9d571acf2509e4f
   branch: master
   specs:
     octopus (0.0.2)
