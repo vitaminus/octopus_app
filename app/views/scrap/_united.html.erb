@@ -1,0 +1,85 @@
+<thead>
+  <tr>
+      <th data-field="depart">Depart</th>
+      <th data-field="name">Arrive</th>
+      <th data-field="price">Stops</th>
+      <th data-field="price">Duration</th>
+      <th data-field="price">Economy</br>(lowest)</th>
+      <th data-field="price">Business</br> Saver Award</th>
+      <th data-field="price">Business</br> Standard Award</th>
+      <th data-field="price">First</br> Saver Award</th>
+      <th data-field="price">First</br> Standard Award</th>
+  </tr>
+</thead>
+<%- @united.each do |f| %>
+  <tbody>
+    <tr>
+      <td>
+        <h5 class="valign center-align"><%= f[:origin] if f[:origin].present? %></h5>
+        <h6 class="valign center-align"><%= f[:depart_date] if f[:depart_date].present? %></h6>
+        <h6 class="valign center-align"><%= f[:depart_time] if f[:depart_time].present? %></h6>
+      </td>
+      <td>
+        <h5 class="valign center-align"><%= f[:destination] if f[:destination].present? %></h5>
+        <h6 class="valign center-align"><%= f[:arrive_date] if f[:arrive_date].present? %></h6>
+        <h6 class="valign center-align"><%= f[:arrive_time] if f[:arrive_time].present? %></h6>
+      </td>
+      <td>
+        <%- if f[:connection] == 'Nonstop'%>
+          <h5 class="valign center-align">Nonstop</h5>
+        <%- elsif f[:connection] == '2 stops' %>
+          <h5 class="valign center-align">2 stops</h5>
+        <%- elsif f[:connection] == '3 stops' %>
+          <h5 class="valign center-align">3 stops</h5>
+        <%- else %>
+          <a class="btn tooltipped" data-position="top" data-delay="50" data-tooltip="<%= f[:connection][:stops_info]['Flights'][0]['Origin'] %> - <%= f[:connection][:stops_info]['Flights'][0]['Destination'] %> - <%= f[:connection][:stops_info]['Flights'][1]['Destination'] %>&#10; Stop time: <%= f[:connection][:stop_time] %>"><%= f[:connection][:stops] %></a>
+          <!-- <h5 class="valign center-align">asdsa</h5> -->
+          <!-- <h6 class="valign center-align"><%= f[:connection][:stop_time] %></h6> -->
+        <% end %>
+      </td>
+      <td>
+        <h5 class="valign center-align"><%= f[:duration] if f[:duration].present? %></h5>
+      </td>
+      <td>
+        <%- if f[:economy] == 'Not Available'%>
+          Not Available
+        <%- else %>
+          <h5 class="valign center-align"><%= f[:economy][:base_price] if f[:economy][:base_price].present? %></h5>
+          <h6 class="valign center-align"><%= f[:economy][:additional_fare] if f[:economy][:additional_fare].present? %></h6>
+        <% end %>
+      </td>
+      <td>
+        <%- if f[:business_saver] == 'Not Available'%>
+          Not Available
+        <%- else %>
+          <h5 class="valign center-align"><%= f[:business_saver][:base_price] if f[:business_saver][:base_price].present? %></h5>
+          <h6 class="valign center-align"><%= f[:business_saver][:additional_fare] if f[:business_saver][:additional_fare].present? %></h6>
+        <% end %>
+      </td>
+      <td>
+        <%- if f[:business] == 'Not Available'%>
+          Not Available
+        <%- else %>
+          <h5 class="valign center-align"><%= f[:business][:base_price] if f[:business][:base_price].present? %></h5>
+          <h6 class="valign center-align"><%= f[:business][:additional_fare] if f[:business][:additional_fare].present? %></h6>
+        <% end %>
+      </td>
+      <td>
+        <%- if f[:first_saver] == 'Not Available'%>
+          Not Available
+        <%- else %>
+          <h5 class="valign center-align"><%= f[:first_saver][:base_price] if f[:first_saver][:base_price].present? %></h5>
+          <h6 class="valign center-align"><%= f[:first_saver][:additional_fare] if f[:first_saver][:additional_fare].present? %></h6>
+        <% end %>
+      </td>
+      <td>
+        <%- if f[:first] == 'Not Available'%>
+          Not Available
+        <%- else %>
+          <h5 class="valign center-align"><%= f[:first][:base_price] if f[:first][:base_price].present? %></h5>
+          <h6 class="valign center-align"><%= f[:first][:additional_fare] if f[:first][:additional_fare].present? %></h6>
+        <% end %>
+      </td>
+    </tr>
+  </tbody>
+<% end %>

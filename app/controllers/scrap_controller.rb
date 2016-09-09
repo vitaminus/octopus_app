@@ -2,15 +2,25 @@ require 'octopus'
 require 'json'
 
 class ScrapController < ApplicationController
-  attr_reader :from, :to, :date
+  attr_reader :from, :to, :date, :login, :password, :program
 
   def index
     @from = params["from"]
     @to = params["to"]
-    @date = DateTime.parse(params["date"]).strftime('%F') if params["date"].present? 
+    @date = DateTime.parse(params["date"]).strftime('%F') if params["date"].present?
+    @program = params["program"]
+    @login = params["login"]
+    @password = params["password"]
+
     if @from.present? && @to.present? && @date.present?
-      octopus = Octopus::United.new(@from,@to,@date)
-      @octopus = octopus.get_data
+      if @program == 'aeroplan'
+        octopus = Octopus::Aeroplan.new(@from,@to,@date,@login,@password)
+        @aeroplan = octopus.get_data
+      else
+        octopus = Octopus::United.new(@from,@to,@date)
+        @united = octopus.get_data
+      end
+      
     else
       render 'index'
     end
@@ -23,6 +33,6 @@ class ScrapController < ApplicationController
   private
 
     def scrap_params
-      params.require(:scrap).permit(:from, :to, :date)
+      params.require(:scrap).permit(:from, :to, :date, :login, :password, :program)
     end
 end

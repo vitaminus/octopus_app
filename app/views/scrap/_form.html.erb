@@ -1,6 +1,6 @@
 <%= form_tag('/', method: 'post', :remote => true, class: 'form-horizontal') do %>
   <div class="row">
-    <div class='col s1 offset-s3'>
+    <div class='col s1 offset-s3' id="main-form">
       <%= label_tag :from, nil, class: 'control-label' %>
       <%= text_field_tag :from, nil, class: "input-field" %>
     </div>
@@ -12,7 +12,21 @@
       <%= label_tag :date, nil, class: "control-label" %>
       <%= date_field_tag :date, nil, class: "datepicker" %>
     </div>
-    <div class="col">
+    <div id="login">
+      <div class='col s1'>
+        <%= label_tag :login, nil, class: "control-label" %>
+        <%= text_field_tag :login, nil, class: "input-field" %>
+      </div>
+      <div class='col s1'>
+        <%= label_tag :password, nil, class: "control-label" %>
+        <%= password_field_tag :password, nil, class: "input-field" %>
+      </div>
+    </div>
+    <div class='col s1'>
+      <%= label_tag :program %><br>
+      <%= select_tag(:program, options_for_select([['Aeroplan', 'aeroplan'], ['United', 'united']], 'united')) %>
+    </div>
+    <div class="col s1">
       <%= submit_tag "Get Data", class: "waves-effect waves-light btn-large" %>
     </div>
   </div>

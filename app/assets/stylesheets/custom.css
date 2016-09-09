@@ -23,3 +23,13 @@
  h6 {
    font-size: 1.1rem;
  }
+
+ .material-tooltip{
+   max-width: 400px !important;
+   white-space: pre;
+ }
+
+ .material-tooltip:after{
+   content: attr(data-tooltip);
+   white-space: pre;
+ }
