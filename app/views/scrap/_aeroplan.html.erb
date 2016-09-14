@@ -2,6 +2,8 @@
   <h5 class="valign center-align">Aeroplan currently undergoing routine maintenance of the site</h5>
 <%- elsif @aeroplan == 'No results were found'%>
   <h5 class="valign center-align">No results were found</h5>
+<%- elsif @aeroplan == 'The Aeroplan Number and/or password you entered does not match'%>
+  <h5 class="valign center-align">The Aeroplan Number and/or password you entered does not match</h5>
 <% else %>
   <thead>
     <tr>
@@ -27,60 +29,21 @@
         </td>
         <td>
           <%- if f[:connection][:stops] == 'Direct'%>
-            <h5 class="valign center-align">Direct</h5>
+            <%- @first_segment = f[:connection][:first_segment] %>
+            <a class="btn tooltipped" data-position="top" data-delay="50" data-tooltip="<%= f[:connection][:first_segment][:departs][:airport] %> - <%= @first_segment[:arrives][:airport] %>&#10; <%= @first_segment[:departs][:date]%> <%= @first_segment[:departs][:time]%> - <%= @first_segment[:arrives][:date]%> <%= @first_segment[:arrives][:time]%>&#10;Cabin: <%= @first_segment[:cabin]%>&#10;Aircraft: <%= @first_segment[:aircraft]%>&#10;Duration: <%= @first_segment[:duration]%>"><%= f[:connection][:stops] %></a>
           <%- elsif f[:connection][:stops] == '2 Stop(s)' %>
-            <h5 class="valign center-align">2 stops</h5>
+            <%- @first_segment = f[:connection][:first_segment] %>
+            <%- @second_segment = f[:connection][:second_segment] %>
+            <%- @third_segment = f[:connection][:third_segment] if f[:connection][:third_segment].present? %>
+            <a class="btn tooltipped" data-position="top" data-delay="50" data-tooltip="First Segment:&#10;<%= f[:connection][:first_segment][:departs][:airport] %> - <%= @first_segment[:arrives][:airport] %>&#10; <%= @first_segment[:departs][:date]%> <%= @first_segment[:departs][:time]%> - <%= @first_segment[:arrives][:date]%> <%= @first_segment[:arrives][:time]%>&#10;Cabin: <%= @first_segment[:cabin]%>&#10;Aircraft: <%= @first_segment[:aircraft]%>&#10;Duration: <%= @first_segment[:duration]%>&#10;&#10; Stop time: <%= @third_segment.present? ? f[:connection][:connection_time][:first_conn] : f[:connection][:connection_time] %>&#10;&#10;  Second Segment:&#10; <%= @second_segment[:departs][:airport] %> - <%= @second_segment[:arrives][:airport] %>&#10; <%= @second_segment[:departs][:date]%> <%= @second_segment[:departs][:time]%> - <%= @second_segment[:arrives][:date]%> <%= @second_segment[:arrives][:time]%>&#10;Cabin: <%= @second_segment[:cabin]%>&#10;Aircraft: <%= @second_segment[:aircraft]%>&#10;Duration: <%= @second_segment[:duration]%><%- if @third_segment.present? %>&#10;&#10;Stop time: <%= f[:connection][:connection_time][:second_conn]%>&#10;&#10;  Third Segment:&#10; <%= @third_segment[:departs][:airport] %> - <%= @third_segment[:arrives][:airport] %>&#10; <%= @third_segment[:departs][:date]%> <%= @third_segment[:departs][:time]%> - <%= @third_segment[:arrives][:date]%> <%= @third_segment[:arrives][:time]%>&#10;Cabin: <%= @third_segment[:cabin]%>&#10;Aircraft: <%= @third_segment[:aircraft]%>&#10;Duration: <%= @third_segment[:duration]%><%end%>"><%= f[:connection][:stops] %></a>
           <%- elsif f[:connection][:stops] == '3 Stop(s)' %>
             <h5 class="valign center-align">3 stops</h5>
           <%- else %>
-            <a class="btn tooltipped" data-position="top" data-delay="50" data-tooltip="First Segment:&#10;<%= f[:connection][:first_segment][:departs][:airport] %> - <%= f[:connection][:first_segment][:arrives][:airport] %>&#10; <%= f[:connection][:first_segment][:departs][:date]%> <%= f[:connection][:first_segment][:departs][:time]%> - <%= f[:connection][:first_segment][:arrives][:date]%> <%= f[:connection][:first_segment][:arrives][:time]%>&#10;Cabin: <%= f[:connection][:first_segment][:cabin]%>&#10;Aircraft: <%= f[:connection][:first_segment][:aircraft]%>&#10;Duration: <%= f[:connection][:first_segment][:duration]%>&#10;&#10; Stop time: <%= f[:connection][:connection_time] %>&#10;&#10;  Second Segment:&#10; <%= f[:connection][:second_segment][:departs][:airport] %> - <%= f[:connection][:second_segment][:arrives][:airport] %>&#10; <%= f[:connection][:second_segment][:departs][:date]%> <%= f[:connection][:second_segment][:departs][:time]%> - <%= f[:connection][:second_segment][:arrives][:date]%> <%= f[:connection][:second_segment][:arrives][:time]%>&#10;Cabin: <%= f[:connection][:second_segment][:cabin]%>&#10;Aircraft: <%= f[:connection][:second_segment][:aircraft]%>&#10;Duration: <%= f[:connection][:second_segment][:duration]%>"><%= f[:connection][:stops] %></a>
-            <!-- <h5 class="valign center-align"><%= f[:connection][:stops] %></h5>
-            <h6 class="valign center-align"><%= f[:connection][:connection_time] %></h6> -->
+            <%- @first_segment = f[:connection][:first_segment] %>
+            <%- @second_segment = f[:connection][:second_segment] %>
+            <a class="btn tooltipped" data-position="top" data-delay="50" data-tooltip="First Segment:&#10;<%= @first_segment[:departs][:airport] %> - <%= @first_segment[:arrives][:airport] %>&#10; <%= @first_segment[:departs][:date]%> <%= @first_segment[:departs][:time]%> - <%= @first_segment[:arrives][:date]%> <%= @first_segment[:arrives][:time]%>&#10;Cabin: <%= @first_segment[:cabin]%>&#10;Aircraft: <%= @first_segment[:aircraft]%>&#10;Duration: <%= @first_segment[:duration]%>&#10;&#10; Stop time: <%= f[:connection][:connection_time] %>&#10;&#10;  Second Segment:&#10; <%= @second_segment[:departs][:airport] %> - <%= @second_segment[:arrives][:airport] %>&#10; <%= @second_segment[:departs][:date]%> <%= @second_segment[:departs][:time]%> - <%= @second_segment[:arrives][:date]%> <%= @second_segment[:arrives][:time]%>&#10;Cabin: <%= @second_segment[:cabin]%>&#10;Aircraft: <%= @second_segment[:aircraft]%>&#10;Duration: <%= @second_segment[:duration]%>"><%= f[:connection][:stops] %></a>
           <% end %>
         </td>
-        <!-- <td>
-          <p>
-          <a class="btn tooltipped" data-position="bottom" data-delay="50" data-tooltip="I am tooltip">Hover me!</a>
-          <%= f[:connection][:first_segment][:airline]%>
-          <%= f[:connection][:first_segment][:flight_number]%>
-          <%= f[:connection][:first_segment][:departs][:date]%>
-          <%= f[:connection][:first_segment][:departs][:time]%>
-          <%= f[:connection][:first_segment][:departs][:airport]%>
-          <%= f[:connection][:first_segment][:departs][:cabin]%>
-          <%= f[:connection][:first_segment][:departs][:bookclass]%>
-          <%= f[:connection][:first_segment][:departs][:aircraft]%>
-          <%= f[:connection][:first_segment][:departs][:duration]%>
-          </p>
-          <p>
-          <%- if f[:connection][:second_segment].present? %>
-            <%= f[:connection][:second_segment][:airline]%>
-            <%= f[:connection][:second_segment][:flight_number]%>
-            <%= f[:connection][:second_segment][:departs][:date]%>
-            <%= f[:connection][:second_segment][:departs][:time]%>
-            <%= f[:connection][:second_segment][:departs][:airport]%>
-            <%= f[:connection][:second_segment][:departs][:cabin]%>
-            <%= f[:connection][:second_segment][:departs][:bookclass]%>
-            <%= f[:connection][:second_segment][:departs][:aircraft]%>
-            <%= f[:connection][:second_segment][:departs][:duration]%>
-            <%= f[:connection][:connection_time] unless f[:connection][:third_segment].present?%>
-          <% end %>
-          </p>
-          <p>
-          <%- if f[:connection][:third_segment].present? %>
-            <%= f[:connection][:third_segment][:airline]%>
-            <%= f[:connection][:third_segment][:flight_number]%>
-            <%= f[:connection][:third_segment][:departs][:date]%>
-            <%= f[:connection][:third_segment][:departs][:time]%>
-            <%= f[:connection][:third_segment][:departs][:airport]%>
-            <%= f[:connection][:third_segment][:departs][:cabin]%>
-            <%= f[:connection][:third_segment][:departs][:bookclass]%>
-            <%= f[:connection][:third_segment][:departs][:aircraft]%>
-            <%= f[:connection][:third_segment][:departs][:duration]%>
-            <%= f[:connection][:connection_time][:first_conn]%>
-            <%= f[:connection][:connection_time][:second_conn]%>
-          <% end %>
-          </p>
-        </td> -->
         <td>
           <h5 class="valign center-align"><%= f[:duration] if f[:duration].present? %></h5>
         </td>
