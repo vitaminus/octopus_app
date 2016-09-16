@@ -26,16 +26,20 @@
           <h6 class="valign center-align"><%= f[:arrive_time] if f[:arrive_time].present? %></h6>
         </td>
         <td>
-          <%- if f[:connection] == 'Nonstop'%>
-            <h5 class="valign center-align">Nonstop</h5>
-          <%- elsif f[:connection] == '2 stops' %>
-            <h5 class="valign center-align">2 stops</h5>
-          <%- elsif f[:connection] == '3 stops' %>
+          <%- if f[:connection][:stops] == 'Nonstop'%>
+            <%- @first_segment = f[:connection][:first_segment] %>
+            <a class="btn tooltipped" data-position="top" data-delay="50" data-tooltip="<%= f[:connection][:first_segment][:departs][:airport] %> - <%= @first_segment[:arrives][:airport] %>&#10; <%= @first_segment[:departs][:time]%> - <%= @first_segment[:arrives][:time]%>&#10;Aircraft: <%= @first_segment[:aircraft]%>&#10;Airline: <%= @first_segment[:airline]%>&#10;Duration: <%= @first_segment[:duration]%>"><%= f[:connection][:stops] %></a>
+          <%- elsif f[:connection][:stops] == '2 stops' && f[:connection][:connection_time].size == 2 %>
+            <%- @first_segment = f[:connection][:first_segment] %>
+            <%- @second_segment = f[:connection][:second_segment] %>
+            <%- @third_segment = f[:connection][:third_segment] if f[:connection][:third_segment].present? %>
+            <a class="btn tooltipped" data-position="top" data-delay="50" data-tooltip="First Segment:&#10;<%= f[:connection][:first_segment][:departs][:airport] %> - <%= @first_segment[:arrives][:airport] %>&#10; <%= @first_segment[:departs][:time]%> - <%= @first_segment[:arrives][:time]%>&#10;Aircraft: <%= @first_segment[:aircraft]%>&#10;Duration: <%= @first_segment[:duration]%>&#10;&#10; Stop time: <%= @third_segment.present? ? f[:connection][:connection_time][:first_conn] : f[:connection][:connection_time] %>&#10;&#10;  Second Segment:&#10; <%= @second_segment[:departs][:airport] %> - <%= @second_segment[:arrives][:airport] %>&#10;<%= @second_segment[:departs][:time]%> - <%= @second_segment[:arrives][:time]%>&#10;Aircraft: <%= @second_segment[:aircraft]%>&#10;Duration: <%= @second_segment[:duration]%><%- if @third_segment.present? && f[:connection][:connection_time].size == 2 %>&#10;&#10;Stop time: <%= f[:connection][:connection_time][:second_conn]%>&#10;&#10;  Third Segment:&#10; <%= @third_segment[:departs][:airport] %> - <%= @third_segment[:arrives][:airport] %>&#10; <%= @third_segment[:departs][:time]%> - <%= @third_segment[:arrives][:time]%>&#10;Aircraft: <%= @third_segment[:aircraft]%>&#10;Duration: <%= @third_segment[:duration]%><%end%>"><%= f[:connection][:stops] %></a>
+          <%- elsif f[:connection][:stops] == '3 stops' %>
             <h5 class="valign center-align">3 stops</h5>
           <%- else %>
-            <a class="btn tooltipped" data-position="top" data-delay="50" data-tooltip="<%= f[:connection][:stops_info]['Flights'][0]['Origin'] %> - <%= f[:connection][:stops_info]['Flights'][0]['Destination'] %> - <%= f[:connection][:stops_info]['Flights'][1]['Destination'] %>&#10; Stop time: <%= f[:connection][:stop_time] %>"><%= f[:connection][:stops] %></a>
-            <!-- <h5 class="valign center-align">asdsa</h5> -->
-            <!-- <h6 class="valign center-align"><%= f[:connection][:stop_time] %></h6> -->
+            <%- @first_segment = f[:connection][:first_segment] %>
+            <%- @second_segment = f[:connection][:second_segment] %>
+            <a class="btn tooltipped" data-position="top" data-delay="50" data-tooltip="First Segment:&#10;<%= @first_segment[:departs][:airport] %> - <%= @first_segment[:arrives][:airport] %>&#10;<%= @first_segment[:departs][:time]%> - <%= @first_segment[:arrives][:time]%>&#10;Aircraft: <%= @first_segment[:aircraft]%>&#10;Duration: <%= @first_segment[:duration]%>&#10;&#10; Stop time: <%= f[:connection][:connection_time] %>&#10;&#10;  Second Segment:&#10; <%= @second_segment[:departs][:airport] %> - <%= @second_segment[:arrives][:airport] %>&#10;<%= @second_segment[:departs][:time]%> - <%= @second_segment[:arrives][:time]%>&#10;Aircraft: <%= @second_segment[:aircraft]%>&#10;Duration: <%= @second_segment[:duration]%>"><%= f[:connection][:stops] %></a>
           <% end %>
         </td>
         <td>
@@ -45,40 +49,40 @@
           <%- if f[:economy] == 'Not Available'%>
             Not Available
           <%- else %>
-            <h5 class="valign center-align"><%= f[:economy][:base_price] if f[:economy][:base_price].present? %></h5>
-            <h6 class="valign center-align"><%= f[:economy][:additional_fare] if f[:economy][:additional_fare].present? %></h6>
+            <h5 class="valign center-align"><%= f[:economy][:miles] if f[:economy][:miles].present? %></h5>
+            <h6 class="valign center-align"><%= f[:economy][:taxes] if f[:economy][:taxes].present? %></h6>
           <% end %>
         </td>
         <td>
           <%- if f[:business_saver] == 'Not Available'%>
             Not Available
           <%- else %>
-            <h5 class="valign center-align"><%= f[:business_saver][:base_price] if f[:business_saver][:base_price].present? %></h5>
-            <h6 class="valign center-align"><%= f[:business_saver][:additional_fare] if f[:business_saver][:additional_fare].present? %></h6>
+            <h5 class="valign center-align"><%= f[:business_saver][:miles] if f[:business_saver][:miles].present? %></h5>
+            <h6 class="valign center-align"><%= f[:business_saver][:taxes] if f[:business_saver][:taxes].present? %></h6>
           <% end %>
         </td>
         <td>
           <%- if f[:business] == 'Not Available'%>
             Not Available
           <%- else %>
-            <h5 class="valign center-align"><%= f[:business][:base_price] if f[:business][:base_price].present? %></h5>
-            <h6 class="valign center-align"><%= f[:business][:additional_fare] if f[:business][:additional_fare].present? %></h6>
+            <h5 class="valign center-align"><%= f[:business][:miles] if f[:business][:miles].present? %></h5>
+            <h6 class="valign center-align"><%= f[:business][:taxes] if f[:business][:taxes].present? %></h6>
           <% end %>
         </td>
         <td>
           <%- if f[:first_saver] == 'Not Available'%>
             Not Available
           <%- else %>
-            <h5 class="valign center-align"><%= f[:first_saver][:base_price] if f[:first_saver][:base_price].present? %></h5>
-            <h6 class="valign center-align"><%= f[:first_saver][:additional_fare] if f[:first_saver][:additional_fare].present? %></h6>
+            <h5 class="valign center-align"><%= f[:first_saver][:miles] if f[:first_saver][:miles].present? %></h5>
+            <h6 class="valign center-align"><%= f[:first_saver][:taxes] if f[:first_saver][:taxes].present? %></h6>
           <% end %>
         </td>
         <td>
           <%- if f[:first] == 'Not Available'%>
             Not Available
           <%- else %>
-            <h5 class="valign center-align"><%= f[:first][:base_price] if f[:first][:base_price].present? %></h5>
-            <h6 class="valign center-align"><%= f[:first][:additional_fare] if f[:first][:additional_fare].present? %></h6>
+            <h5 class="valign center-align"><%= f[:first][:miles] if f[:first][:miles].present? %></h5>
+            <h6 class="valign center-align"><%= f[:first][:taxes] if f[:first][:taxes].present? %></h6>
           <% end %>
         </td>
       </tr>
