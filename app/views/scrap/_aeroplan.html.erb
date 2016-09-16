@@ -4,6 +4,8 @@
   <h5 class="valign center-align">No results were found</h5>
 <%- elsif @aeroplan == 'The Aeroplan Number and/or password you entered does not match'%>
   <h5 class="valign center-align">The Aeroplan Number and/or password you entered does not match</h5>
+<%- elsif @aeroplan == 'aeroplan.com failed to reach server'%>
+  <h5 class="valign center-align">aeroplan.com failed to reach server</h5>
 <% else %>
   <thead>
     <tr>
